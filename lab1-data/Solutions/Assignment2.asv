@@ -1,0 +1,14 @@
+% Random Integer
+rInteger = randi([1 20]);
+fprintf('W
+
+% Use the sprintf function to generate the string
+fileToLoad = sprintf('person%02d.mat',rInteger); 
+
+% Load the data from the persons file
+data = load(fileToLoad);
+
+% Choose randomly 2 rows
+r1 = randi([1 20]);
+r2 = randi([1 20]);
+fprintf('The first row index is: %d.\n',r1,r2);
