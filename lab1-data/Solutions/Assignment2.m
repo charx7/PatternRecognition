@@ -12,7 +12,7 @@ notReapeated = false;
 while notReapeated == false
     % Choose randomly 2 rows
     r1 = randi([1 20]);
-    r1 = randi([1 20]);
+    r2 = randi([1 20]);
     if r1 ~= r2
         notReapeated = true;
     else
@@ -21,3 +21,7 @@ while notReapeated == false
 end
     
 fprintf('The first row index is: %d.\nThe second one is %d. \n',r1,r2);
+fprintf('Selecting....\n');
+%matrixData = cell2mat(struct2cell(data));
+
+disp(hammingDistance(0,1));
