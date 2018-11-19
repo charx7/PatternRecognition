@@ -10,7 +10,7 @@ x1 = matrixData(:,1);
 % Weight
 y1 = matrixData(:,end);
 figure('Name','Largest');
-scatter(x1,y1,'red', 'filled');
+scatter(x1,y1,'r', 'filled');
 % Title of the plot
 title('Largest Correlation');
 % Axis labels
@@ -23,7 +23,7 @@ x2 = matrixData(:,2);
 % Weight
 y2 = matrixData(:,end);
 figure('Name','Second Largest');
-scatter(x2,y2,'green', 'square', 'filled');
+scatter(x2,y2,'g', 'square', 'filled');
 % Title of the plot
 title('Second Largest Correlation');
 % Axis labels
