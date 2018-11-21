@@ -78,7 +78,7 @@ for i = 1:10000
   %fprintf('Example hammingDistance is: %d  \n', hdResult);
   % Save the results on the vector
   vectorResults = [vectorResults ; hdResult];
-endfor
+end
 
 % ############# Code for the set D ######################
 % Get Data for the set D
@@ -121,12 +121,36 @@ for i = 1:10000
   hdResult = hammingDistance(firstRow, secondRow);
   vectorResults2 = [vectorResults2 ; hdResult];
   
-endfor
+end
 
 % Histogram plotz
-binsize = 10;
+binsize = 7;
 figure('Name','Histogram of S and D');
 hold on;
-hist(vectorResults, binsize, 'FaceColor','r');
-hist(vectorResults2, binsize,'FaceColor','g');
+h1 = histogram(vectorResults,'facecolor','red');
+h1.BinWidth  =  0.04; 
+
+h2 = histogram(vectorResults2,'facecolor','green');
+h2.BinWidth  =  0.04; 
 hold off;
+
+% Computation of the mean and var of the array of S
+sMean = mean(vectorResults);
+fprintf('The mean of the set S is: %f02. \n', sMean);
+sVar = var(vectorResults);
+fprintf('The variance of the set S is: %f02. \n', sVar);
+
+% Computation of the mean and var of the array of S
+dMean = mean(vectorResults2);
+fprintf('The mean of the set D is: %f02. \n', dMean);
+dVar = var(vectorResults2);
+fprintf('The variance of the set D is: %f02. \n', dVar);
+
+dfS = (dMean *(1- dMean)) / (dVar);
+fprintf('The degrees of freedom os D are: %f02. \n', dfS);
+
+criterion = norminv(0.0005, dMean, sqrt(dVar));
+fprintf('The criterion C is: %f02. \n', criterion);
+
+p = normcdf(criterion, dMean, sqrt(dVar));
+fprintf('The probability of the hamming dist been < Criterion is: %f02. \n',  p);

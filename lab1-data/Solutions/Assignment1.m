@@ -17,7 +17,6 @@ title('Largest Correlation');
 xlabel('feature1: height');
 ylabel('feature2: weight');
 
-
 % Age
 x2 = matrixData(:,2);
 % Weight
