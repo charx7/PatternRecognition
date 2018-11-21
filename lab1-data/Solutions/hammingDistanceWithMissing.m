@@ -10,6 +10,10 @@ function [ result ] = hammingDistanceWithMissing(v1, v2, numberMissingBits)
     szdim = size(xorResult,2);
     % Adjust the normalizin factor by the number of missing bits
     szdim = szdim - numberMissingBits;
-    
+    % Calculate Result
     result = vectorSum / szdim;
+    % If condition
+    if result < 0 
+        result = 0;
+    end
 end
