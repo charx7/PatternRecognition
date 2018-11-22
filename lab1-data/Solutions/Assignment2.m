@@ -152,5 +152,5 @@ fprintf('The degrees of freedom os D are: %f02. \n', dfS);
 criterion = norminv(0.0005, dMean, sqrt(dVar));
 fprintf('The criterion C is: %f02. \n', criterion);
 
-p = normcdf(criterion, dMean, sqrt(dVar));
+p = normcdf(criterion, sMean, sqrt(sVar));
 fprintf('The probability of the hamming dist been < Criterion is: %f02. \n',  p);
