@@ -1,3 +1,5 @@
+% Clear input
+clc;
 % Random Integer
 rInteger = randi([1 20]);
 fprintf('We are choosing the random %d file.\n', rInteger);
@@ -123,15 +125,33 @@ for i = 1:10000
   
 end
 
+pd1 = fitdist(vectorResults,'Normal');
+pd2 = fitdist(vectorResults2,'Normal');
+
+figure('Name','Normal density fit for S and D');
+hold on;
+histfit(vectorResults,7, 'Normal');
+histfit(vectorResults2,10, 'Normal');
+hold off;
+
+% Plot the values of the fitted pdf
+x_values = 0:.01:.8;
+y = (pdf(pd1,x_values))*300;
+
+x1_values = 0:.01:.8;
+y2 = (pdf(pd2,x1_values))*300;
+
 % Histogram plotz
 binsize = 7;
 figure('Name','Histogram of S and D');
 hold on;
 h1 = histogram(vectorResults,'facecolor','red');
 h1.BinWidth  =  0.04; 
+plot(x_values,y,'LineWidth',2);
 
 h2 = histogram(vectorResults2,'facecolor','green');
-h2.BinWidth  =  0.04; 
+h2.BinWidth  =  0.04;
+plot(x1_values,y2,'LineWidth',2);
 hold off;
 
 % Computation of the mean and var of the array of S
@@ -153,4 +173,11 @@ criterion = norminv(0.0005, dMean, sqrt(dVar));
 fprintf('The criterion C is: %f02. \n', criterion);
 
 p = normcdf(criterion, sMean, sqrt(sVar));
-fprintf('The probability of the hamming dist been < Criterion is: %f02. \n',  p);
+fprintf('The probability of the hamming dist been > Criterion is: %f02. \n',  1-p);
+
+% Calculation of the cutpoint for disctintion of the test person
+% Using the calculation for theoretica std for p = 0.5 and n = 20
+stdTheoretical = 1/(2*sqrt(20));
+hdWithPerson5 = 0.0275002;
+cutpoint = normcdf(hdWithPerson5, 0.5, stdTheoretical);
+fprintf('The cutpoint is: %d. \n', cutpoint);
