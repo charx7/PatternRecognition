@@ -23,7 +23,7 @@ X = [x y];
 
 % Now we define the discriminant functions for minimum error rate
 g_1 = -(1/2)*(X - muMatrix1)* covMatrix1Inv * transpose((X - muMatrix1)) - (1/2)*log(detCov1) + log(prior1);
-g_2 = -(1/2)*(X - muMatrix2)* covMatrix2Inv * transpose((X - muMatrix2)) - (1/2)*log(detCov2) + log(prior2);
+g_2 = -(1/2)*(X - muMatrix2)* covMatrix1Inv * transpose((X - muMatrix2)) - (1/2)*log(detCov2) + log(prior2);
 
 % use the expand function to get the quadratic for of the polynomial
 g_1Poly = expand(g_1);
@@ -35,10 +35,11 @@ fprintf('The second polynomial is: \n');
 disp(g_2Poly);
 
 % Solve both functions to getthe decision boundary equation
+g_2 = -(1/2)*(X - muMatrix2)* covMatrix2Inv * transpose((X - muMatrix2)) - (1/2)*log(detCov2) + log(prior2);
+% Solve it
 boundryEq = solve(g_1 - g_2 == 0, y);
-%boundryEqPoly = simplify(boundryEq);
+assume(,'real')
+boundryEqPoly = simplify(boundryEq);
 
-boundryPoly = expand(g_1 - g_2);
 fprintf('The boundry polynomial is: \n');
-disp(real(boundryPoly));
-
+disp(boundryEqPoly);
