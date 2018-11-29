@@ -1,3 +1,6 @@
+% Clean the output of the console
+clc;
+
 %create rows to be later merged and transposed into final matrix
 A = [4 5 6];
 B = [6 3 9];
@@ -23,5 +26,6 @@ biasedCovMatrix = (cov(K')*4)/5;
 pointOne = [5 5 6];
 pointTwo = [3 5 7];
 pointThree = [4 6.5 1];
-result = mvnpdf([pointOne;pointTwo;pointThree],[meanF1;meanF2;meanF3]',biasedCovMatrix);
 
+% using the pdf
+result = mvnpdf([pointOne;pointTwo;pointThree],[meanF1;meanF2;meanF3]',biasedCovMatrix);
