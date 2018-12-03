@@ -11,8 +11,8 @@ rng default
 randomNumbers = mvnrnd(mu,sigma,100);
 
 % Plot the distribution
-x1 = -10:1:10; 
-x2 = -10:1:10;
+x1 = -10:.25:10; 
+x2 = -10:.25:10;
 
 % Get a meshgrid of the series
 [X1,X2] = meshgrid(x1,x2);
@@ -41,7 +41,7 @@ MD_to_secondPoint = (secondPoint - mu)* sigmaInv * (secondPoint - mu)';
 MD_to_thirdPoint = (thirdPoint - mu)* sigmaInv * (thirdPoint - mu)';
 MD_to_fourthPoint = (fourthPoint - mu)* sigmaInv * (fourthPoint - mu)';
 
-fprintf('The Md dist to the first point is: %f02. \n',MD_to_firstPoint);
-fprintf('The Md dist to the second point is: %f02. \n',MD_to_secondPoint);
-fprintf('The Md dist to the second point is: %f02. \n',MD_to_thirdPoint);
-fprintf('The Md dist to the second point is: %f02. \n',MD_to_fourthPoint);
+fprintf('The Md dist to the first point is: %f02. \n',sqrt(MD_to_firstPoint));
+fprintf('The Md dist to the second point is: %f02. \n',sqrt(MD_to_secondPoint));
+fprintf('The Md dist to the second point is: %f02. \n',sqrt(MD_to_thirdPoint));
+fprintf('The Md dist to the second point is: %f02. \n',sqrt(MD_to_fourthPoint));

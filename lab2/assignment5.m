@@ -35,10 +35,9 @@ fprintf('The second polynomial is: \n');
 disp(g_2Poly);
 
 % Solve both functions to getthe decision boundary equation
-boundryEq = solve(g_1 - g_2 == 0, y);
+boundryEq = solve(g_1 - g_2 == 0, y, 'Real', true);
 %boundryEqPoly = simplify(boundryEq);
 
 boundryPoly = expand(g_1 - g_2);
 fprintf('The boundry polynomial is: \n');
 disp(real(boundryPoly));
-
