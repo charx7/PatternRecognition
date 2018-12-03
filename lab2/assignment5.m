@@ -1,5 +1,6 @@
 % Clean output of the console
 clc;
+clear;
 
 % Normal dist parameters
 muMatrix1 = [3 5];
@@ -35,9 +36,16 @@ fprintf('The second polynomial is: \n');
 disp(g_2Poly);
 
 % Solve both functions to getthe decision boundary equation
-boundryEq = solve(g_1 - g_2 == 0, y, 'Real', true);
+boundryEq = solve(g_1 - g_2 == 0 , y, 'Real', true);
 %boundryEqPoly = simplify(boundryEq);
 
 boundryPoly = expand(g_1 - g_2);
 fprintf('The boundry polynomial is: \n');
 disp(real(boundryPoly));
+
+% Plot of the function
+
+eq = -16/9 * sqrt((3 * x^2)/8 - 3 * x + 397787000669652329/36028797018963968) - 1/3;
+disp(expand(boundryEq));
+%fplot(real(boundryEq),[-10 20]);
+fplot(real(eq),[-10 20]);
