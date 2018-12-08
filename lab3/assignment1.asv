@@ -62,8 +62,12 @@ fprintf('The True positives rate is: %f \n', truePositives);
 trueNegativesVector = or(v1,v2);
 
 % Get the count
-trueNegativesCount = nnz(truePositivesVector);
+trueNegativesCount = dimensions(:,1) - nnz(trueNegativesVector);
 % Divide by the total number of trials
-truePositives = truePositivesCount / dimensions(:,1);
-fprintf('The True positives rate is: %f \n', truePositives);
-
+trueNegatives = trueNegativesCount / dimensions(:,1);
+fprintf('The True negatives rate is: %f \n', trueNegatives);
+% The count of the false positives
+falsePositives = numel(find(v2 == 1));
+% False Positive rate fp / (fp + TN)
+falsePositiveRate = falsePositives / (falsePositives + trueNegatives);
+truePositiveRate = truePositives / (truePositives + falseNegatives);

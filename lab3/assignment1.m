@@ -66,4 +66,12 @@ trueNegativesCount = dimensions(:,1) - nnz(trueNegativesVector);
 % Divide by the total number of trials
 trueNegatives = trueNegativesCount / dimensions(:,1);
 fprintf('The True negatives rate is: %f \n', trueNegatives);
+% The count of the false positives
+falsePositivesCount = numel(find(v2 == 1));
+falseNegativesCount = numel(find(v1 == 1));
+% False Positive rate fp / (fp + TN)
+falsePositiveRate = falsePositivesCount / (falsePositivesCount + trueNegativesCount);
+truePositiveRate = truePositivesCount / (truePositivesCount + falseNegativesCount);
 
+fprintf('The value of the hit rate is: %f \n', truePositiveRate);
+fprintf('The value of false alarm rate is: %f \n', falsePositiveRate);

@@ -42,7 +42,7 @@ boundryEq = solve(g_1 - g_2 == 0 , y, 'Real', true);
 boundryPoly = expand(g_1 - g_2);
 fprintf('The boundry polynomial is: \n');
 disp(real(boundryPoly));
-
+    
 % Plot of the function
 
 eq = -16/9 * sqrt((3 * x^2)/8 - 3 * x + 397787000669652329/36028797018963968) - 1/3;
