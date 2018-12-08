@@ -2,10 +2,10 @@ clear all;
 clc;
 load lab3_2.mat;
 
-K=7;
+K=5;
 samples=64;
 data = lab3_2;
-nr_of_classes = 2;
+nr_of_classes = 4;
 
 % Class labels
 class_labels = floor( (0:length(data)-1) * nr_of_classes / length(data) );
@@ -28,8 +28,10 @@ title([int2str(K) '-NN, ' int2str(nr_of_classes) ' classes']);
 
 % this is only correct for the first question
 scaled_data=samples*data;
-plot(scaled_data(  1:100,1),scaled_data(  1:100,2),'go');
-plot(scaled_data(101:200,1),scaled_data(101:200,2),'r+');
+plot(scaled_data(  1: 50,1),scaled_data(  1: 50,2),'go');
+plot(scaled_data( 51:100,1),scaled_data( 51:100,2),'b+');
+plot(scaled_data(101:150,1),scaled_data(101:150,2),'r+');
+plot(scaled_data(151:200,1),scaled_data(151:200,2),'cs');
 
 function predictedClass = KNN(point , K, data, class_labels)
     % Euclidean distance compute

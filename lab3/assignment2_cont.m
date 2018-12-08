@@ -9,7 +9,7 @@ for k = 1:2:17
     K=k;
     samples=200;
     data = lab3_2;
-    nr_of_classes = 2;
+    nr_of_classes = 4;
 
     % Class labels
     class_labels = floor( (0:length(data)-1) * nr_of_classes / length(data) );
@@ -40,10 +40,11 @@ for k = 1:2:17
     fprintf('The percent of incorrect classifications is: %f \n', incorrect_percent);
 end
     
- ks = cell2mat(ks)
- er
+ ks = cell2mat(ks);
+ error_vector = cell2mat(error_vector);
  figure;
  plot(ks, error_vector);
+ 
  
 function predictedClass = KNN(point , K, data, class_labels)
     % Euclidean distance compute
