@@ -79,17 +79,16 @@ fprintf('The value of the hit rate is: %f \n', truePositiveRate);
 fprintf('The value of false alarm rate is: %f \n', falsePositiveRate);
 
 % Construct the ROC curve
-delta = 0.1;
-j = 0;
-for i = 0:0.05:0.35
-   j = j + 1;
-   xCord = falsePositiveRate + i;
-   yCord = truePositiveRate - i;
-   X(j) = xCord;
-   Y(j) = yCord;
-end
+space = 0:0.1:20;
+tryStd = .947;
+X = 1 - normcdf(space, mean1, tryStd);
+Y = 1 - normcdf(space, mean2, tryStd);
 
 % Plot
 figure;
-scatter(X, Y);
+scatter(falsePositiveRate, truePositiveRate, 8, 'filled');
+hold on;
+plot(X,Y);
+
+disc2 = abs(mean2 - mean1) / tryStd
  

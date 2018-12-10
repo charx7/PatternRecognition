@@ -4,7 +4,7 @@ load lab3_2.mat;
 
 error_vector = {};
 ks = {};
-for k = 1:2:17
+for k = 1:17
     % Change K to use LOOCV
     K=k;
     samples=200;
