@@ -2,8 +2,9 @@
 %Data sets have to be in the same directory with the script
 %ATTENTION====================================================================================
 
-close all
-clear
+close all;
+clc;
+clear;
 
 %load data set
 cat1 = load("lab3_3_cat1.mat");

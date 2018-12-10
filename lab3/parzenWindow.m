@@ -12,16 +12,21 @@ n = n(1);
 %transpose datapoint matrix
 x = x';
 
-logicTest = ((p-x).^2)/(2*h^2) <= 1/2;
+%compute the matrix using parzen window function
+parzenWinFuncMat = (-(p-x).^2)/(2*(h^2));
 
-total = 0;
-for i = 1:n
-    if sum(logicTest(:,i)) == 3
-        total = total +1;
-    end
-end
+%sum up each values within columns
+summedUp = sum(parzenWinFuncMat,1);
 
-%parzen window estimation
-result = (1/n)*(1/((sqrt(2*pi)*h))^3)*exp(-total);
+%get exp of the summedUp matrix
+expMat = exp(summedUp);
+
+%divide by (sqrt(2*pi)*h)^3 which is volume of the hyper cube and the obs
+%lenght which is n
+
+normalizedMat = expMat/((sqrt(2*pi)*h)^3*n);
+
+
+result = sum(normalizedMat(:));
 
 end

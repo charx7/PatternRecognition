@@ -67,11 +67,29 @@ trueNegativesCount = dimensions(:,1) - nnz(trueNegativesVector);
 trueNegatives = trueNegativesCount / dimensions(:,1);
 fprintf('The True negatives rate is: %f \n', trueNegatives);
 % The count of the false positives
-falsePositivesCount = numel(find(v2 == 1));
-falseNegativesCount = numel(find(v1 == 1));
+falsePositivesCountPartial = numel(find(v2 == 1));
+falseNegativesCountPartial = numel(find(v1 == 1));
+falsePositivesCount = falsePositivesCountPartial - truePositivesCount;
+falseNegativesCount = falseNegativesCountPartial - truePositivesCount;
 % False Positive rate fp / (fp + TN)
 falsePositiveRate = falsePositivesCount / (falsePositivesCount + trueNegativesCount);
 truePositiveRate = truePositivesCount / (truePositivesCount + falseNegativesCount);
 
 fprintf('The value of the hit rate is: %f \n', truePositiveRate);
 fprintf('The value of false alarm rate is: %f \n', falsePositiveRate);
+
+% Construct the ROC curve
+delta = 0.1;
+j = 0;
+for i = 0:0.05:0.35
+   j = j + 1;
+   xCord = falsePositiveRate + i;
+   yCord = truePositiveRate - i;
+   X(j) = xCord;
+   Y(j) = yCord;
+end
+
+% Plot
+figure;
+scatter(X, Y);
+ 
