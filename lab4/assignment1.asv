@@ -38,26 +38,14 @@ plot(x,y,'s','color','black');
 
 % Hough line usage
 % Get the maximum vector points
-maxPeakIndexes = houghpeaks(hc,1,'threshold',ceil(0.3*max(hc(:))));
-maxVectorDimTheta	=	theta(maxPeakIndexes(:,2));	
-maxVectorDimR	=	rho(maxPeakIndexes(:,1));
-
-% make a new figure
-figure
-imshow(c);
-
-
-myhoughline(c,  maxVectorDimR, maxVectorDimTheta); 
-% for i=1:length(x)
-%     myhoughline(c, y(i), x(i));
-%     hold on
-% end
+[maxVectorDimX maxVectorDimY] = max(hc(:));
+strongestLine = myhoughline(c, 
 
 function myhoughline(image,r,theta)
     [x,y]=size(image);
 
-    angle=deg2rad(theta);
-   
+    angle=pi*(181-theta)/180;
+    
     if sin(angle)==0
         line([r r],[0,y],'Color','red')
     else
