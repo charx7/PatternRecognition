@@ -6,7 +6,7 @@ img = imread('HeadTool0002.bmp');
 
 %convert to double precision
 
-Y = double(J);
+Y = double(img);
 
 fprintf('the type of array is: %s \n', class(Y));
 
@@ -31,4 +31,3 @@ imshow(J);
 centersStrong5 = centers(1:2,:); 
 radiiStrong5 = radii(1:2);
 viscircles(centersStrong5, radiiStrong5,'EdgeColor','b');
-
