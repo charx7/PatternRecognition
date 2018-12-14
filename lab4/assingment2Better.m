@@ -21,7 +21,7 @@ rho = floor(X*cosd(theta) + Y*sind(theta));
 %find largest value in the rho matrix to determine accumulator array's
 %dimension
 rhoMax = max(rho(:));
-rhoRange = -rhoMax-2:1:rhoMax+2;
+rhoRange = -rhoMax-1:1:rhoMax+1;
 
 %initialize accumulator array of zeros
 accArray = zeros(length(rhoRange),length(theta));
