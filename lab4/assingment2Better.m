@@ -16,7 +16,7 @@ theta = -90:1:89;
 
 %using equation 1 given for the assignment we compute all possible rho values
 %for each X,Y coordinate pairs
-rho = round(X*cosd(theta) + Y*sind(theta));
+rho = floor(X*cosd(theta) + Y*sind(theta));
 
 %find largest value in the rho matrix to determine accumulator array's
 %dimension
