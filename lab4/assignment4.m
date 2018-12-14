@@ -20,7 +20,7 @@ imshowpair(img, J,'montage');
 
 
 %find 6 circles
-[centers, radii, metric] = imfindcircles(J,[15 58]);
+[centers, radii, metric] = imfindcircles(J,[14 53]);
 
 %show 6 circles
 imshow(J);
