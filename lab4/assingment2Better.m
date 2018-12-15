@@ -16,7 +16,7 @@ theta = -90:1:89;
 
 %using equation 1 given for the assignment we compute all possible rho values
 %for each X,Y coordinate pairs
-rho = floor(X*cosd(theta) + Y*sind(theta));
+rho = floor(X.*cosd(theta) + Y.*sind(theta));
 
 %find largest value in the rho matrix to determine accumulator array's
 %dimension
@@ -32,11 +32,21 @@ rhoRangeMat = repmat(rhoRange,[size(rho(:),1),1]);
 %transpose rho
 transRho = rho';
 
-%subtract each calculated rho values from total range and take absolute values 
-diffMatrix = abs(rhoRangeMat-transRho(:));
+%delete variable to free up memory
+clear rho
+
+%subtract each calculated rho values from total range and take absolute
+%values.
+diffMatrix = abs((rhoRangeMat-transRho(:))+1);
+
+%delete variable to free up memory
+clear rhoRangeMat
 
 %find where the shortest difference occurs between rho values and rhoRange
 [d, indArrRho] = min(diffMatrix,[],2);
+
+%delete variable to free up memory
+clear diffMatrix
 
 angleIndex = repmat((1:length(theta))',[size(indArrRho,1)/length(theta),1]);
 
@@ -45,7 +55,6 @@ for i=1:size(indArrRho,1)
     accArray(indArrRho(i),angleIndex(i)) = accArray(indArrRho(i),angleIndex(i)) + 1;
     
 end
-
 
 %original hough function
 [hcm,thetaVal,rhoVal] = hough(edges);
