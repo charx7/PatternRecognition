@@ -8,7 +8,7 @@ I = imread('dogGrayRipples.png');
 I = im2double(I);
 
 % Do the fft on 2d
-f = fft2(I); 
+f = fft2(I);
 
 % Log transform
 f = log(1+f);
@@ -23,8 +23,8 @@ f = abs(fs);
 imshow(f,[]);
 
 % Good value for r?
-r = 10;
-[x, y] = find(f==max(f));
+r = 1;
+[x, y] = getpts();
 
 % Build a mask 
 % construc an empty vector
@@ -51,7 +51,7 @@ figure, imshow(~mask,[]);title('Mask')
 
 % Show the image
 % apply the mask
-fs=fs.*(~mask);
+fs=fs.*(-mask);
 
 % apply the inverse fft
 f = ifftshift(fs);

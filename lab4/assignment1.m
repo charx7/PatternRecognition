@@ -23,6 +23,7 @@ hcTh(hcTh < 0.999 * max(hc(:))) = 0;
 imagesc(hc, 'Xdata', theta, 'Ydata', rho);
 xlabel('\theta	(degrees)')	
 ylabel('\rho')
+title('s3743071');
 axis on
 axis normal
 hold on
@@ -33,7 +34,7 @@ peaks = houghpeaks(hc,5,'threshold',ceil(0.3*max(hc(:))));
 
 % Superimposition on the HT images	
 x	=	theta(peaks(:,2));	
-y	=	rho(peaks(:,1));	
+y	=	rho(peaks(:,1));
 plot(x,y,'s','color','black');
 
 % Hough line usage
@@ -48,6 +49,7 @@ imshow(c);
 
 
 myhoughline(c,  maxVectorDimR, maxVectorDimTheta); 
+title('s3743071');
 % for i=1:length(x)
 %     myhoughline(c, y(i), x(i));
 %     hold on

@@ -15,12 +15,12 @@ edges = edge(c, 'canny');
 
 % Pretty plotz
 figure
-subplot(2,1,1);
+subplot(1,2,1);
 imagesc(hc, 'Xdata', theta, 'Ydata', rho);
 title('My hough');
 
 hold on
-subplot(2,1,2);
+subplot(1,2,2);
 imagesc(hcMatlab, 'Xdata', thetaMatlab, 'Ydata', rhoMatlab);
 title('Matlab Hough');
 
