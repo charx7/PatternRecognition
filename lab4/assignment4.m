@@ -5,8 +5,7 @@ clear;
 img = imread('HeadTool0002.bmp');
 
 %convert to double precision
-
-Y = double(img);
+Y = im2double(img);
 
 fprintf('the type of array is: %s \n', class(Y));
 

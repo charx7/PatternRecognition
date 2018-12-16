@@ -9,9 +9,20 @@ edges = edge(c, 'canny');
 
 % Compute the hough transform
 [hc, theta, rho] = myhough(edges);
+% The real ht of matlab
+[hcMatlab, thetaMatlab, rhoMatlab] = hough(edges);
+
 
 % Pretty plotz
+figure
+subplot(2,1,1);
 imagesc(hc, 'Xdata', theta, 'Ydata', rho);
+title('My hough');
+
+hold on
+subplot(2,1,2);
+imagesc(hcMatlab, 'Xdata', thetaMatlab, 'Ydata', rhoMatlab);
+title('Matlab Hough');
 
 function [hc, theta, rho] = myhough(edges)
     % Calculate the size of the edges to get the diagonal
@@ -41,7 +52,8 @@ function [hc, theta, rho] = myhough(edges)
                    radians = (t*pi)/180;
                    
                    % Calculation of the distance
-                   currentRho = xCord*cos(radians) + yCord*sin(radians);
+                   currentRho = yCord*cos(radians) + xCord*sin(radians);
+                   currentRho = round(currentRho);
                    % Find the closest Value in the rho array
                    [d, indexRho] = min(abs(rhoValues- currentRho));
                    
