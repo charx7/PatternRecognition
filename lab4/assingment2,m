@@ -8,4 +8,4 @@ img = imread('Cameraman.tiff');
 edges = edge(img,'canny');
 
 %Call myhough function
-[accumulator,thetaRange,rhoValues] = myhough(edges);
+[accumulator,thetaRange,rhoValues] = myhough(edges,img);
