@@ -1,4 +1,4 @@
-function [accumulator,thetaRange,rhoValues] = myhough(edgeMap)
+function [accumulator,thetaRange,rhoValues] = myhoughAlt(edgeMap)
 
 %Set theta
 theta = -90:1:89;
@@ -19,34 +19,21 @@ rhoRange = -rhoMax-1:1:rhoMax+1;
 %initialize accumulator array of zeros
 accArray = zeros(length(rhoRange),length(theta));
 
-%repeat row vector "rhoRange" by the row size of rho 
-rhoRangeMat = repmat(rhoRange,[size(rho(:),1),1]);
-
-%transpose rho
-transRho = rho';
-
-%delete variable to free up memory
-clear rho
-
-%subtract each calculated rho values from total range and take absolute
-%values.
-diffMatrix = abs((rhoRangeMat-transRho(:))+1);
-
-%delete variable to free up memory
-clear rhoRangeMat
-
-%find where the shortest difference occurs between rho values and rhoRange
-[~,indArrRho] = min(diffMatrix,[],2);
-
-%delete variable to free up memory
-clear diffMatrix
-
-angleIndex = repmat((1:length(theta))',[size(indArrRho,1)/length(theta),1]);
-
-for i=1:size(indArrRho,1)
-    
-    accArray(indArrRho(i),angleIndex(i)) = accArray(indArrRho(i),angleIndex(i)) + 1;
-    
+for i=1:length(X)
+   for k =1:length(theta)
+        %using equation 1 given for the assignment we compute all possible rho values
+        %for each X,Y coordinate pairs
+        rho = floor(X(i)*cosd(theta(k)) + Y(i)*sind(theta(k)));
+        %subtract each calculated rho values from total range and take absolute
+        %values.
+        diff = abs((rhoRange-rho)+1);
+        %find where the shortest difference occurs between rho values and rhoRange
+        [d,rhoIndex] = min(diff,[],2);
+        %
+        if d == 0
+            accArray(rhoIndex,k) = accArray(rhoIndex,k) + 1;
+        end
+   end    
 end
 
 accumulator = accArray;
