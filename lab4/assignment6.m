@@ -10,57 +10,47 @@ I = im2double(I);
 % Do the fft on 2d
 f = fft2(I);
 
-% Log transform
-f = log(1+f);
-
-% Shift the transform
+% fft shift
 fs= fftshift(f);
 
 % Take the abs values
 f = abs(fs);
 
+% Log transform
+f = log(1+f);
+
 % Show the images
 imshow(f,[]);
 
-% Good value for r?
-r = 1;
-[x, y] = getpts();
-
-% Build a mask 
-% construc an empty vector
-mask=zeros(size(f));
-
-% Variable inits
-rows = size(f,1);
-cols = size(f,2);
-radius = r;
-center = [x; y];  
+% Build a mask/ variable inits
+rows = size(f,1),cols = size(f,2),radius =10, [x ,y] =getpts; center=[x;y];
 
 % Get a meshgrid
 [xMat,yMat] = meshgrid(1:cols,1:rows);
 
+% Initialize the mask as zeros
+mask=zeros(size(f));
 for i =1:size(center,2)
-    distFromCenter = sqrt((xMat-center(1,i)).^2 + (yMat-center(2,i)).^2);
+    distFromCenter = sqrt((xMat-center(1,i)).^2 + (yMat-center(3,i)).^2);
+    % Apply the mask
+    mask(distFromCenter<=radius)=1;
+    
+    distFromCenter = sqrt((xMat-center(2,i)).^2 + (yMat-center(4,i)).^2);
+    % Apply the mask
     mask(distFromCenter<=radius)=1;
 end
 
-% pretty plotz
-figure, imshow(~mask,[]);title('Mask')
+% Plot the images
+figure,imshow(f,[]); hold on; imshow(~mask,[]);title('Mask')
 
-% Apply the mask and filter the noise
+% Apply the mask
+fs=fs.*(~mask);
 
-% Show the image
-% apply the mask
-fs=fs.*(-mask);
-
-% apply the inverse fft
+% Apply a shift to the fft
 f = ifftshift(fs);
 
-% shift the inverse fft
+% Get the real part of the ifft
 I = real(ifft2(f));
-
-% Plot
-figure, imshow(I, []), title('Reconstructed');
-
-
+% Plot the image w/out noise
+figure, imshow(I, []), title('s3743071');
 
