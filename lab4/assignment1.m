@@ -16,10 +16,12 @@ edges = edge(c, 'canny');
 % Plot
 figure
 imagesc(hc, 'Xdata', theta, 'Ydata', rho);
+title('s3743071');
 
 hcTh = hc;
 hcTh(hcTh < 0.999 * max(hc(:))) = 0;
 
+figure
 imagesc(hc, 'Xdata', theta, 'Ydata', rho);
 xlabel('\theta	(degrees)')	
 ylabel('\rho')

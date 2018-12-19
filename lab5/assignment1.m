@@ -30,6 +30,9 @@ title('Scatter Plot of 2 classes');
 numberOfPrototypes = 3;
 numberOfClasses = 2;
 
+% Class labels
+class_labels = floor( (0:length(fullData)-1) * numberOfClasses / length(fullData) );
+
 % Calculate the class conditional means
 class1mean = mean(data1mat);
 class2mean = mean(data2mat);
@@ -40,24 +43,24 @@ class2mean = mean(data2mat);
 % Add random noise for each prototype
 % Init weights with random noise
 prototype1 = class1mean + randn(size(class1mean));
-prototype2 = class2mean + randn(size(class2mean));
-prototype3 = class1mean + randn(size(class1mean));
+prototype2 = class1mean + randn(size(class1mean));
+prototype3 = class2mean + randn(size(class2mean));
 
 % Vectorize
-prototypes = [prototype1; prototype2; prototype3];
+prototypes = [prototype1 0; prototype2 0; prototype3 1];
 
 % parameters of the algo
 szData = size(fullData);
 numberOfExamples = szData(1);
 learningRate = 0.01; 
-epochs = 1;
+epochs = 10;
 for j = 1:epochs
     % Do the loop for the number of epochs
     for i = 1:numberOfExamples
         % Get the current Point
         currentPoint = fullData(i,:);
         % Calculate the distances
-        currentDistance = pdist2(currentPoint, prototypes,'euclidean');
+        currentDistance = pdist2(currentPoint, prototypes(:,1:2),'euclidean');
         % Square the dist measure
         currentDistanceSquare = currentDistance.^2;
         % Calculate the min
@@ -65,17 +68,26 @@ for j = 1:epochs
 
         % Update the positions of the prototypes based on the winner 
         % Get the winner closer
-        prototypes(minIdx, :) = prototypes(minIdx, :) + learningRate*currentPoint;
+        winnerLabel = prototypes(minIdx,3);
+        currentLabel = class_labels(i);
+        if winnerLabel == currentLabel
+            % Move closer the winning prototype
+            prototypes(minIdx,1:2) = prototypes(minIdx,1:2) + learningRate * (currentPoint - prototypes(minIdx,1:2));
+        else
+            % Push away the winning prototype
+            prototypes(minIdx,1:2) = prototypes(minIdx,1:2) - learningRate * (currentPoint - prototypes(minIdx,1:2));
+        end
+        %prototypes(minIdx, :) = prototypes(minIdx, :) + learningRate*currentPoint;
         % Get the loosers further away
-        prototypes([1:minIdx-1 minIdx+1:end],:) = prototypes([1:minIdx-1 minIdx+1:end],:) - learningRate*repmat(currentPoint,2,1);
+        %prototypes([1:minIdx-1 minIdx+1:end],:) = prototypes([1:minIdx-1 minIdx+1:end],:) - learningRate*repmat(currentPoint,2,1);
 
     end
 end
 
+% Plot of the prototypes on top of the scatter
 plot(prototypes(1,1), prototypes(1,2), 'r*','color','b','MarkerSize',10);
 plot(prototypes(2,1), prototypes(2,2), 'r*','color','g','MarkerSize',10);
 plot(prototypes(3,1), prototypes(3,2), 'r*','color','r','MarkerSize',10);
-
 hold on
 
 
