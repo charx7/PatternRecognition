@@ -1,7 +1,10 @@
-function [Epochcount,epochsError] = myLVQ1(dat,prototypes,class_labels,learningRate,plotMode,epochNumber)
+function [Epochcount,epochsError,prototypeList,predictedLabels] = myLVQ1(dat,prototypes,class_labels,learningRate,plotMode,epochNumber)
 %%
-%Returns the Epochcount if the last parameter is not supplied. Also returns
-%epochError based on euclidean distance metric. 
+%Returns: 
+%Epochcount - epoch count if the last parameter is not supplied.
+%epochError - calculated error of an epoch based on euclidean distance metric. 
+%prototypeList - updated prototype coordinate points
+%predictedLabels - new class labels for each data point
 
 %If the last parameter 'epochNumber' is supplied by the user, the function
 %stops when epoch number is reached by the for loop. Else, the function try
@@ -19,11 +22,11 @@ function [Epochcount,epochsError] = myLVQ1(dat,prototypes,class_labels,learningR
 szData = size(dat);
 numberOfExamples = szData(1);
 epochsError = [];
-errorRate = 1;
+errorRatio = 1;
 Epochcount = 0;
 %%
 if ~exist('epochNumber','var') || isempty(epochNumber)
-    while (errorRate<0.99990) || (errorRate>0.99999)
+    while (errorRatio<0.99950) || (errorRatio>0.99999)
         currentEpochError = 0;
         % Do the loop for the number of numberOfExamples
         for i = 1:numberOfExamples
@@ -56,11 +59,10 @@ if ~exist('epochNumber','var') || isempty(epochNumber)
     
         %calculate whether t approaches constant
         if size(epochsError,1) < 2
-    
             errorRate = 1;
         else
             lError = size(epochsError,1);
-            errorRate = mean(epochsError(floor(lError*0.7):floor(lError*0.85)))/mean(epochsError(floor(lError*0.85):lError));
+            errorRatio = mean(epochsError(floor(lError*0.7):floor(lError*0.85)))/mean(epochsError(floor(lError*0.85):lError));
         end
         
         Epochcount = Epochcount + 1;
@@ -100,6 +102,24 @@ else
     end
 end
 
+prototypeList = prototypes;
+
+%initiate list of zeros for predictedLabels
+predictedLabels = zeros(200,1);
+
+%predict new labels
+for f =1:numberOfExamples
+    currentPoint = dat(f,:);
+    % Calculate the distances
+    currentDistance = pdist2(currentPoint, prototypeList(:,1:2),'euclidean');
+    % Square the dist measure
+    currentDistanceSquare = currentDistance.^2;
+    % Calculate the min
+    [currentMin, minIdx] = min(currentDistanceSquare);
+    %store predicted labels
+    predictedLabels(f,1) = prototypeList(minIdx,3);
+end
+    
 if plotMode == 1
     % Plot of the prototypes on top of the scatter
     for p=1:size(prototypes,1)
@@ -107,12 +127,12 @@ if plotMode == 1
         hold on
     end
     
-    
-else 
+elseif plotMode == 2
     % Plot the number of epochs vs error
     plot(epochsError);
     legend('Error')
     hold on
+    
+elseif plotMode == 3
 end
 end
-
