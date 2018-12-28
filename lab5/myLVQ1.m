@@ -18,7 +18,7 @@ function [Epochcount,epochsError,prototypeList,predictedLabels] = myLVQ1(dat,pro
 %epoch until convergence is achieved or the provided epoch number is
 %reached.
 
-%parameters of the algorithm
+%init parameters
 szData = size(dat);
 numberOfExamples = szData(1);
 epochsError = [];
@@ -26,7 +26,7 @@ errorRatio = 1;
 Epochcount = 0;
 %%
 if ~exist('epochNumber','var') || isempty(epochNumber)
-    while (errorRatio<0.99950) || (errorRatio>0.99999)
+    while (errorRatio<0.99900) || (errorRatio>0.99999)
         currentEpochError = 0;
         % Do the loop for the number of numberOfExamples
         for i = 1:numberOfExamples
