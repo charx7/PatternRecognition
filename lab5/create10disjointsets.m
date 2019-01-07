@@ -11,17 +11,6 @@ while size(SetAIndices,1) < 10
     SetAIndices = [SetAIndices;candidateIndices];
 end
 
-%create test set indices for Class A
-SetAIndices = [];
-List = linspace(1,100);
-
-while size(SetAIndices,1) < 10 
-    candidateIndices = datasample(List,10,'Replace', false);
-    [Indx, ~] = ismember(List,candidateIndices);
-    List(Indx) = [];
-    SetAIndices = [SetAIndices;candidateIndices];
-end
-
 
 %create test set indices for Class B
 SetBIndices = [];
