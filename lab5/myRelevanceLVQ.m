@@ -1,20 +1,22 @@
-function [Epochcount,epochsError,prototypeList,predictedLabels,lamdas] = myRelevanceLVQ(dat,prototypes,class_labels,learningRate,plotMode)
+function [Epochcount,epochsError,prototypeList,predictedLabels,lambdasVector] = myRelevanceLVQ(dat,prototypes,class_labels,learningRate,plotMode)
 
     % Same init parameters ans the normal LVQ
     %init parameters
     szData = size(dat);
     numberOfExamples = szData(1);
     epochsError = [];
+    lambdasVector = [];
     errorRatio = 2;
     Epochcount = 0;
     predictedLabels = [];
     prototypeList = [];
-    lamdaLearning = 0.005;
+    lamdaLearning = 0.0001;
     lamda1 = 0.5;
     lamda2 = 0.5;
-
+    previousEpochError = 10000;
+    
     if exist('class_labels','Var')
-        while (errorRatio<0.99990) || (errorRatio>=1)
+        while (errorRatio<0.9990) || (errorRatio>=1)
             currentEpochError = 0;
                 % Do the loop for the number of numberOfExamples
                 for i = 1:numberOfExamples
@@ -46,22 +48,35 @@ function [Epochcount,epochsError,prototypeList,predictedLabels,lamdas] = myRelev
                     if winnerLabel == currentLabel
                         % Contribute of the j dimension decrease
                         lamda1 = lamda1 - lamdaLearning * abs(currentPoint(1) - prototypes(minIdx,1));
+                        lamda2 = lamda2 - lamdaLearning * abs(currentPoint(2) - prototypes(minIdx,2));
+                   
                         % Restrictions >0 and lamdas sum = 1
                         if lamda1 < 0
                             lamda1 = 0;
                         end
-                        lamda2 = 1 - lamda1;
+                        % Normalization of the lamdas
+                        lamda1 = lamda1/(lamda1 + lamda2);
+                        lamda2 = lamda2/(lamda1 + lamda2);
                     else
                         % Contribute of the j dimension increase
                         lamda1 = lamda1 + lamdaLearning * abs(currentPoint(1) - prototypes(minIdx,1));
+                        lamda2 = lamda2 + lamdaLearning * abs(currentPoint(2) - prototypes(minIdx,2));
+                   
                         % Restrictions >0 and lamdas sum = 1
                         if lamda1 < 0
                             lamda1 = 0;
                         end
-                        lamda2 = 1 - lamda1;
+                        
+                        % Normalization of the lamdas
+                        lamda1 = lamda1/(lamda1 + lamda2);
+                        lamda2 = lamda2/(lamda1 + lamda2);
                     end
                     %prototypes([1:minIdx-1 minIdx+1:end],:) = prototypes([1:minIdx-1 minIdx+1:end],:) - learningRate*repmat(currentPoint,2,1);
                 end
+            
+            % Lambdas collection
+            currentLamdas = [lamda1; lamda2];
+            lambdasVector = [lambdasVector, currentLamdas];
             % Add to the epochs error matrix
             currentErrorRate = currentEpochError / numberOfExamples;
             epochsError = [epochsError; currentErrorRate];
@@ -74,12 +89,21 @@ function [Epochcount,epochsError,prototypeList,predictedLabels,lamdas] = myRelev
                 errorRatio = mean(epochsError(floor(lError*0.7):floor(lError*0.85)))/mean(epochsError(floor(lError*0.85):lError));
             end
             
+            % Break if epochs error start to increase
+            if abs(previousEpochError/numberOfExamples - currentEpochError/numberOfExamples) < .001
+                disp('Error Started to stabilize... Early Stop');
+                break
+            end
+                
+            previousEpochError = currentEpochError;
+            
             Epochcount = Epochcount + 1;
             prototypeList = prototypes;
 
         end
         disp('I finished looping weee');
     end
+    
     if ~exist('class_labels','Var') || isempty(class_labels)
         %initiate list of zeros for predictedLabels
         predicted = zeros(numberOfExamples,1);
@@ -125,7 +149,7 @@ function distances = lambdaEuclidean(currentPoint, prototypes, lamda1, lamda2)
     protoLen = length(prototypes);
     %dist = zeros(protoLen,1);
     % Loop over the prototypes
-    dist = ((lamda1 * currentPoint(1) - prototypes(:,1)).^2) + ((lamda2 * currentPoint(1)- prototypes(:,2)).^2);
+    dist = (lamda1 * (currentPoint(1) - prototypes(:,1)).^2) + (lamda2 * (currentPoint(1)- prototypes(:,2)).^2);
     % Function return the transpose to determine the winner
     distances = transpose(dist);
 end

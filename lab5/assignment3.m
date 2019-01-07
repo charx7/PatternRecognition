@@ -51,74 +51,14 @@ myRelevanceLVQ(fullData,prototypes,class_labels,0.01,1);
 legend('Class 1','Class 2','Prototype 1-A','Prototype 2-A','Prototype 3-B')
 
 figure
-myRelevanceLVQ(fullData,prototypes,class_labels,0.01,2);
+[Epochcount,epochsError,prototypeList,predictedLabels,lamdas] = myRelevanceLVQ(fullData,prototypes,class_labels,0.01,2);
 title('Number of Epochs vs Error');
 
-
-%Prepare prototypes lists question 5 - 7
-%Init prototypes lists for plotting 4 different combinations of prototype per class
-prototype_1to1 = [prototype1 0; prototype3 1];
-prototype_1to2 = [prototype1 0; prototype3 1; prototype4 1];
-prototype_2to1 = [prototype1 0; prototype2 0; prototype3 1];
-prototype_2to2 = [prototype1 0; prototype2 0; prototype3 1; prototype4 1];
-
-
-%Scatter plot the result of 4 combinations of prototypes for question 6
+% Lambdas Plot
 figure
-subplot(2,2,1)
-scatter(data1mat(:,1), data1mat(:,2));
+plot(lamdas(1,:));
 hold on
-scatter(data2mat(:,1), data2mat(:,2));
-title('Scatter Plot of 1to1');
-hold on
-myRelevanceLVQ(fullData,prototype_1to1,class_labels,0.01,1);
-legend('Class 1','Class 2','Prototype 1-A','Prototype 3-A')
-
-subplot(2,2,2)
-scatter(data1mat(:,1), data1mat(:,2));
-hold on
-scatter(data2mat(:,1), data2mat(:,2));
-title('Scatter Plot of 1to2');
-hold on
-myRelevanceLVQ(fullData,prototype_1to2,class_labels,0.01,1);
-legend('Class 1','Class 2','Prototype 1-A','Prototype 3-B','Prototype 4-B')
-
-subplot(2,2,3)
-scatter(data1mat(:,1), data1mat(:,2));
-hold on
-scatter(data2mat(:,1), data2mat(:,2));
-title('Scatter Plot of 2to1');
-hold on
-myRelevanceLVQ(fullData,prototype_2to1,class_labels,0.01,1);
-legend('Class 1','Class 2','Prototype 1-A','Prototype 2-A','Prototype 3-B')
-
-subplot(2,2,4)
-scatter(data1mat(:,1), data1mat(:,2));
-hold on
-scatter(data2mat(:,1), data2mat(:,2));
-title('Scatter Plot of 2to2');
-hold on
-myRelevanceLVQ(fullData,prototype_2to2,class_labels,0.01,1);
-legend('Class 1','Class 2','Prototype 1-A','Prototype 2-A','Prototype 4-B','Prototype 3-B')
-
-%Error plot the result of 4 combinations of prototypes for question 5
-figure
-subplot(2,2,1)
-title('Number of Epochs vs Error - 1to1');
-hold on
-myRelevanceLVQ(fullData,prototype_1to1,class_labels,0.01,2);
-
-subplot(2,2,2)
-title('Number of Epochs vs Error - 1to2');
-hold on
-myRelevanceLVQ(fullData,prototype_1to2,class_labels,0.01,2);
-
-subplot(2,2,3)
-title('Number of Epochs vs Error - 2to1');
-hold on
-myRelevanceLVQ(fullData,prototype_2to1,class_labels,0.01,2);
-
-subplot(2,2,4)
-title('Number of Epochs vs Error - 2to2');
-hold on
-myRelevanceLVQ(fullData,prototype_2to2,class_labels,0.01,2);
+plot(lamdas(2,:));
+legend('lamda1','lamda2');
+title('Lambdas across epochs');
+%prototype_2to1 = [prototype1 0; prototype2 0; prototype3 1];
