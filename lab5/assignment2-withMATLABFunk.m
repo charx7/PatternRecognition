@@ -77,12 +77,13 @@ for i=1:10
     
     %train LVQ1 with training set and output updated prototype list
     [~,~,prototypeList,~] = myLVQ1(trainSet,prototypes,trainSetLabels,0.01);
-
-    %use LVQ1 model to predict labels for test set
-    [~,~,~,predictedLabels] = myLVQ1(testSet,prototypeList);
     
     %update prototype list to use for next iteration
     prototypes = prototypeList;
+
+    %use LVQ1 model to predict labels for test set
+    [~,~,~,predictedLabels] = myLVQ1(testSet,prototypes);
+    
     
     %compare the labels of hold-out set with predicted labels
     commonLabelsIdx = find(testSetLabels == predictedLabels);
