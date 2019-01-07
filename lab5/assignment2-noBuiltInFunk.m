@@ -35,18 +35,7 @@ prototype3 = class2mean + randn(size(class2mean));
 prototype4 = class2mean + randn(size(class2mean));
 
 % Vectorize
-prototypes = [prototype1 0; prototype2 0; prototype3 1];%
-
-%create test set indices for Class A
-SetAIndices = [];
-List = linspace(1,100);
-
-while size(SetAIndices,1) < 10 
-    candidateIndices = datasample(List,10,'Replace', false);
-    [Indx, ~] = ismember(List,candidateIndices);
-    List(Indx) = [];
-    SetAIndices = [SetAIndices;candidateIndices];
-end
+prototypes = [prototype1 0; prototype2 0; prototype3 1];
 
 %create test set indices for Class A
 SetAIndices = [];
@@ -118,10 +107,10 @@ for i=1:10
     
     %train LVQ1 with training set and output updated prototype list
     [~,~,prototypeList,~] = myLVQ1(trainSet,prototypes,trainSetLabels,0.01);
-
+    
     %update prototype list to use for next iteration
     prototypes = prototypeList;
-    
+
     %use LVQ1 model to predict labels for test set
     [~,~,~,predictedLabels] = myLVQ1(testSet,prototypes);
     
