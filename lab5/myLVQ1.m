@@ -28,8 +28,8 @@ prototypeList = [];
 if exist('class_labels','Var')
     while (errorRatio<0.99990) || (errorRatio>=1)
         currentEpochError = 0;
-        % Do the loop for the number of numberOfExamples
-        for i = 1:numberOfExamples
+            % Do the loop for the number of numberOfExamples
+            for i = 1:numberOfExamples
             % Get the current Point
             currentPoint = dat(i,:);
             % Calculate the distances

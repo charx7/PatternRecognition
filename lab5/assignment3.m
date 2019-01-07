@@ -47,11 +47,11 @@ prototype4 = class2mean + randn(size(class2mean));
 prototypes = [prototype1 0; prototype2 0; prototype3 1];
 
 %Plot for question 4
-myLVQ1(fullData,prototypes,class_labels,0.01,1);
+myRelevanceLVQ(fullData,prototypes,class_labels,0.01,1);
 legend('Class 1','Class 2','Prototype 1-A','Prototype 2-A','Prototype 3-B')
 
 figure
-myLVQ1(fullData,prototypes,class_labels,0.01,2);
+myRelevanceLVQ(fullData,prototypes,class_labels,0.01,2);
 title('Number of Epochs vs Error');
 
 
@@ -71,7 +71,7 @@ hold on
 scatter(data2mat(:,1), data2mat(:,2));
 title('Scatter Plot of 1to1');
 hold on
-myLVQ1(fullData,prototype_1to1,class_labels,0.01,1);
+myRelevanceLVQ(fullData,prototype_1to1,class_labels,0.01,1);
 legend('Class 1','Class 2','Prototype 1-A','Prototype 3-A')
 
 subplot(2,2,2)
@@ -80,7 +80,7 @@ hold on
 scatter(data2mat(:,1), data2mat(:,2));
 title('Scatter Plot of 1to2');
 hold on
-myLVQ1(fullData,prototype_1to2,class_labels,0.01,1);
+myRelevanceLVQ(fullData,prototype_1to2,class_labels,0.01,1);
 legend('Class 1','Class 2','Prototype 1-A','Prototype 3-B','Prototype 4-B')
 
 subplot(2,2,3)
@@ -89,7 +89,7 @@ hold on
 scatter(data2mat(:,1), data2mat(:,2));
 title('Scatter Plot of 2to1');
 hold on
-myLVQ1(fullData,prototype_2to1,class_labels,0.01,1);
+myRelevanceLVQ(fullData,prototype_2to1,class_labels,0.01,1);
 legend('Class 1','Class 2','Prototype 1-A','Prototype 2-A','Prototype 3-B')
 
 subplot(2,2,4)
@@ -98,7 +98,7 @@ hold on
 scatter(data2mat(:,1), data2mat(:,2));
 title('Scatter Plot of 2to2');
 hold on
-myLVQ1(fullData,prototype_2to2,class_labels,0.01,1);
+myRelevanceLVQ(fullData,prototype_2to2,class_labels,0.01,1);
 legend('Class 1','Class 2','Prototype 1-A','Prototype 2-A','Prototype 4-B','Prototype 3-B')
 
 %Error plot the result of 4 combinations of prototypes for question 5
@@ -106,19 +106,19 @@ figure
 subplot(2,2,1)
 title('Number of Epochs vs Error - 1to1');
 hold on
-myLVQ1(fullData,prototype_1to1,class_labels,0.01,2);
+myRelevanceLVQ(fullData,prototype_1to1,class_labels,0.01,2);
 
 subplot(2,2,2)
 title('Number of Epochs vs Error - 1to2');
 hold on
-myLVQ1(fullData,prototype_1to2,class_labels,0.01,2);
+myRelevanceLVQ(fullData,prototype_1to2,class_labels,0.01,2);
 
 subplot(2,2,3)
 title('Number of Epochs vs Error - 2to1');
 hold on
-myLVQ1(fullData,prototype_2to1,class_labels,0.01,2);
+myRelevanceLVQ(fullData,prototype_2to1,class_labels,0.01,2);
 
 subplot(2,2,4)
 title('Number of Epochs vs Error - 2to2');
 hold on
-myLVQ1(fullData,prototype_2to2,class_labels,0.01,2);
+myRelevanceLVQ(fullData,prototype_2to2,class_labels,0.01,2);
