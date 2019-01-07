@@ -62,14 +62,14 @@ errorList = [];
 %Employ cv for LVQ1
 for i=1:10
     %find test indices
-    testIdx = cv.test(1);
+    testIdx = cv.test(i);
     %obtain test set
     testSet = fullData(testIdx,:);
     %find classlabels of train set
     testSetLabels = class_labels(testIdx,:);
     
     %find train indices
-    trainIdx = cv.training(1);
+    trainIdx = cv.training(i);
     %obtain train set
     trainSet = fullData(trainIdx,:);
     %find classlabels of train set
@@ -77,12 +77,13 @@ for i=1:10
     
     %train LVQ1 with training set and output updated prototype list
     [~,~,prototypeList,~] = myLVQ1(trainSet,prototypes,trainSetLabels,0.01);
-
-    %use LVQ1 model to predict labels for test set
-    [~,~,~,predictedLabels] = myLVQ1(testSet,prototypeList);
     
     %update prototype list to use for next iteration
     prototypes = prototypeList;
+
+    %use LVQ1 model to predict labels for test set
+    [~,~,~,predictedLabels] = myLVQ1(testSet,prototypes);
+    
     
     %compare the labels of hold-out set with predicted labels
     commonLabelsIdx = find(testSetLabels == predictedLabels);
@@ -96,7 +97,15 @@ end
 
 %plotting
 meanError = mean(errorList);
+errorList = errorList';
+
 figure
 bar(errorList);
+text(2.5,0.6,sprintf('mean error value is: %f', meanError),'Color','red','FontSize',12)
 hold on
+text(1:length(errorList),errorList,num2str(errorList'),'vert','bottom','horiz','center'); 
+xlabel("fold in cross-validation");
+ylabel("error on test sets");
+title("results of 10-fold cross-validation");
 plot(xlim,[meanError meanError], 'r')
+ylim([0 1])
