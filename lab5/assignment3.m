@@ -51,11 +51,13 @@ myRelevanceLVQ(fullData,prototypes,class_labels,0.01,1);
 legend('Class 1','Class 2','Prototype 1-A','Prototype 2-A','Prototype 3-B')
 
 figure
+subplot(1,2,1);
 [Epochcount,epochsError,prototypeList,predictedLabels,lamdas] = myRelevanceLVQ(fullData,prototypes,class_labels,0.01,2);
 title('Number of Epochs vs Error');
 
+hold on
 % Lambdas Plot
-figure
+subplot(1,2,2);
 plot(lamdas(1,:));
 hold on
 plot(lamdas(2,:));

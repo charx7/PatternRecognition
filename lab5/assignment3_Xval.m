@@ -85,7 +85,7 @@ end
 %Create error list to store classification errors
 errorList = [];
 
-%Employ cv for LVQ1
+%Employ cv for Relevance LVQ
 for i=1:10
 
     %create array of numbers from 1 to 200 
