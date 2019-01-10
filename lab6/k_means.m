@@ -23,6 +23,8 @@ for i=1:k
     randomPoint = dataMat(randomIndex,:);
     centroids = [centroids; randomPoint];
 end
+% Must save for the arroz plotz
+initialCentroids = centroids;
 
 % Epochs loop
 for j=1:maxEpochs
@@ -59,10 +61,11 @@ for j=1:maxEpochs
     end
 end
 
-colorz = ['r','g','b','c'];
+colorz = ['r','g','b','c','m','y','k','w'];
 % Plotz for dayz
 for p=1:size(centroids,1)
     plot(centroids(p,1), centroids(p,2), '-o','MarkerSize',10, 'MarkerFaceColor', colorz(p));
+    % Plot arrows
     hold on
 end
 % Scatter Plot of the dataz
@@ -73,6 +76,12 @@ classes = scatterData(:,3);
 scatter(x1(classes == 1), x2(classes == 1))
 hold on;
 scatter(x1(classes == 2), x2(classes == 2))
-hold off
-legend('First Cluster','Second Cluster','Cluster 1','Cluster 2')
+hold on
+
+legend('centroid1','centroid2','Cluster1','Cluster2')
+for p=1:size(centroids,1)
+    plot_arrow(initialCentroids(p,1),initialCentroids(p,2),centroids(p,1),centroids(p,2));
+    
+    hold on
+end
 title('Scatter Plot of k=2');
