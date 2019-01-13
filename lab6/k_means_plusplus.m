@@ -18,7 +18,7 @@ function [ initialCentroids, centroids, clusterLabels ] = myKmeans(data, numberO
     % Not sure if remove XD
     centroids = [centroids; randomPoint];
     D = [];
-    for j=1:k
+    for j=1:k-1
         for i=1:numberOfExamples 
             % Get the current Point
             currentPoint = data(i,:);
@@ -30,7 +30,13 @@ function [ initialCentroids, centroids, clusterLabels ] = myKmeans(data, numberO
             % nearest prototype
             D = [D currentMin];
         end
-        
+        D_squared = D.^2;
+        % Sample according to the Distance matrix
+        newCentroidIndex = randsample(numberOfExamples,1, true, D_squared);
+        centroidPoint = data(newCentroidIndex,:);
+        centroids = [centroids; centroidPoint];
+        % Clean up the D matrix
+        D = [];
     end
     
     % Must save for the arroz plotz
