@@ -9,7 +9,11 @@ function error = quantization_error(data, centroids, labels)
         clusterSize = length(currentDataCluster);
         % Sum the error over all the data points inside the cluster
         for j=1:clusterSize
-            sum = sum + (norm(centroids(i,:) -  currentDataCluster(j,:)))^2;
+            try 
+                sum = sum + (norm(centroids(i,:) -  currentDataCluster(j,:)))^2;
+            catch 
+                sum = sum;
+            end
         end
     end
     sum = sum/2;

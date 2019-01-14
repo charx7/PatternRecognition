@@ -32,11 +32,23 @@ for i=1:epochs,
   D_prototypes = zeros(n,dim);   % difference for vectors is initially zero
   D_prototypes_av = zeros(n,1);       % the same holds for the quotients
   
-  for j=1:dlen,  % consider all points at once for the batch update
+  % Init sums for the denom and nom
+  nomSum = 0;
+  denomSum = 0;
+  
+  for j=1:dlen  % consider all points at once for the batch update
     
     % sample vector
     x = Data(j,:); % sample vector
-    X = x(ones(n,1),:);  % we'll need this
+    %X = x(ones(n,1),:);  % we'll need this
+    % compute the distances from the prototypes
+    distances = p2dist(x, prototypes);
+    [~, SortOrder] = sort(distances);
+    
+    for ki = 0:n-1
+        i=SortOrder(ki+1);
+        prototypes(i,:) = prototypes(i,:) + eta*exp(-ki/lambda(epoch))*(x-prototypes(i,:));
+    end
     
     % neighborhood ranking
     % DISTANCE!!!
@@ -53,7 +65,7 @@ for i=1:epochs,
   prototypes = D_prototypes ;
   
   % track
-  if 1,   %plot each epoch
+  if epochs==10   %plot each epoch
     fprintf(1,'%d / %d \r',i,epochs);
     hold off
     plot(Data(:,xdim),Data(:,ydim),'bo','markersize',3)

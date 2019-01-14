@@ -14,15 +14,15 @@ quotientFunction = [];
 twenty_runsError_kmeans = [];
 twenty_runsError_kmeans_plus = [];
 % change to 10 after try out with 3 for debugz
-for n=1:10
+for n=1:5
     tic
     disp('Starting trial number: ');
-    n
+    n 
     for i=1:20
         % K-means
-        [initialCentroids, centroids, clusterLabels]  = myKmeans(dataMat, 100 ,10);
+        [initialCentroids, centroids, clusterLabels]  = myKmeans(dataMat, 100 ,40);
         % K-means ++
-        [initialCentroids_plus, centroids_plus, clusterLabels_plus] = k_means_plusplus(dataMat, 100, 10);
+        [initialCentroids_plus, centroids_plus, clusterLabels_plus] = k_means_plusplus(dataMat, 100, 50);
         % Error for k-means
         currentKError = quantization_error(dataMat, centroids, clusterLabels);
         % Error for k-means ++
@@ -53,9 +53,9 @@ for n=1:10
 end
 
 % Calcs for qs 8-13
-kMeansMean = mean(twenty_runsError_kmeans);
-stdKMeans = std(twenty_runsError_kmeans);
-kPlusMean = mean(twenty_runsError_kmeans_plus);
-stdKMeansPlus = std(twenty_runsError_kmeans_plus);
+kMeansMean = mean(twenty_runsError_kmeans)
+stdKMeans = std(twenty_runsError_kmeans)
+kPlusMean = mean(twenty_runsError_kmeans_plus)
+stdKMeansPlus = std(twenty_runsError_kmeans_plus)
 % t-test
-[h,pValue] = ttest2(twenty_runsError_kmeans, twenty_runsError_kmeans_plus);
+[h,pValue] = ttest2(twenty_runsError_kmeans, twenty_runsError_kmeans_plus)
