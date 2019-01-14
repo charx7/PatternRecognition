@@ -11,7 +11,7 @@ function [ initialCentroids, centroids, clusterLabels ] = myKmeans(data, numberO
     % ----- INIT K++------------------------------
     % Modify the initial centroids from the ++ algo
     % take random samples from the data set
-    rng(42)
+    
     randomIndex = randsample(numberOfExamples,1);
     % Choose the point to be random 
     randomPoint = data(randomIndex,:);

@@ -26,7 +26,7 @@ for n=1:10
         % Error for k-means
         currentKError = quantization_error(dataMat, centroids, clusterLabels);
         % Error for k-means ++
-        currentKError_plus = quantization_error(dataMat, centroids, clusterLabels_plus);
+        currentKError_plus = quantization_error(dataMat, centroids_plus, clusterLabels_plus);
         % Store the error
         ksError = [ksError, currentKError];
         ksError_plus = [ksError_plus, currentKError_plus];
