@@ -10,7 +10,7 @@ function [ initialCentroids, centroids, clusterLabels ] = myKmeans(data, numberO
 
     % take random samples from the data set
     for i=1:k
-        rng(41 + i)
+        %rng(41 + i)
         randomIndex = randsample(numberOfExamples,1);
         randomPoint = data(randomIndex,:);
         centroids = [centroids; randomPoint];

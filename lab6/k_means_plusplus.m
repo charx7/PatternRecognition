@@ -31,6 +31,7 @@ function [ initialCentroids, centroids, clusterLabels ] = myKmeans(data, numberO
             D = [D currentMin];
         end
         D_squared = D.^2;
+        
         % Sample according to the Distance matrix
         newCentroidIndex = randsample(numberOfExamples,1, true, D_squared);
         centroidPoint = data(newCentroidIndex,:);
