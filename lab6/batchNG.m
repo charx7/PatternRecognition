@@ -6,10 +6,10 @@ function [prototypes] = batchNG(Data, n, epochs, xdim, ydim)
 %   epoch the number of iterations,
 %   xdim and ydim are the dimensions to be plotted, default xdim=1,ydim=2
 
-error(nargchk(3, 5, nargin));  % check the number of input arguments
+%narginchk(3, 5);  % check the number of input arguments
 if (nargin<4)
   xdim=1; ydim=2;   % default plot values
-end;
+end
 
 [dlen,dim] = size(Data);
 
@@ -28,56 +28,34 @@ lambda = lambda0 * (0.01/lambda0).^([0:(epochs-1)]/epochs);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Action
 
-for i=1:epochs,
-  D_prototypes = zeros(n,dim);   % difference for vectors is initially zero
-  D_prototypes_av = zeros(n,1);       % the same holds for the quotients
-  
-  % Init sums for the denom and nom
-  nomSum = 0;
-  denomSum = 0;
-  
-  for j=1:dlen  % consider all points at once for the batch update
-    
-    % sample vector
-    x = Data(j,:); % sample vector
-    %X = x(ones(n,1),:);  % we'll need this
-    % compute the distances from the prototypes
-    distances = p2dist(x, prototypes);
-    [~, SortOrder] = sort(distances);
-    
-    for ki = 0:n-1
-        i=SortOrder(ki+1);
-        prototypes(i,:) = prototypes(i,:) + eta*exp(-ki/lambda(epoch))*(x-prototypes(i,:));
-    end
-    
-    % neighborhood ranking
-    % DISTANCE!!!
-    % 1-BMU, 2-BMU, etc. (hint:sort)
-    %find ranking,h,H
-    
-    % accumulate update
-    D_prototypes = ...
-    D_prototypes_av = ...
-  end
-  D_prototypes = ...
+    for i=1:epochs
+      D_prototypes = zeros(n,dim);   % difference for vectors is initially zero
+      D_prototypes_av = zeros(n,1);       % the same holds for the quotients
+
+      for j=1:dlen  % consider all points at once for the batch update
+        % sample vector
+        x = Data(j,:); % sample vector
+        X = x(ones(n,1),:);  % we'll need this
+
+        % find winner prototype for each point based on distance measure
+        distanceToClusters = pdist2(x, prototypes, 'euclidean');
+        [~, ranks] = sort(distanceToClusters);
       
-  % update
-  prototypes = D_prototypes ;
-  
-  % track
-  if epochs==10   %plot each epoch
-    fprintf(1,'%d / %d \r',i,epochs);
-    hold off
-    plot(Data(:,xdim),Data(:,ydim),'bo','markersize',3)
-    hold on
-    plot(prototypes(:,xdim),prototypes(:,ydim),'r.','markersize',10,'linewidth',3)
-    % write code to plot decision boundaries
-    ... 
-    plot decision boundaries here
-    ...
-    %pause
-    %or
-    drawnow
-  end
+       %Adaptation 
+        for k = 1:size(prototypes,1)
+            D_prototypes(ranks(k),:) = D_prototypes(ranks(k),:) + (exp(-k/lambda(i)) * x);
+            D_prototypes_av(ranks(k),:) = D_prototypes_av(ranks(k),:) + exp(-k/lambda(k));
+        end 
+      end
+      
+      % Update
+      for z = 1:size(D_prototypes,1)
+        D_prototypes(z,:) = D_prototypes(z,:)/D_prototypes_av(z);
+      end
+      
+      prototypes = D_prototypes;
+
+      % track
+    end
 end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
