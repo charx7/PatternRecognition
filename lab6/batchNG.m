@@ -44,7 +44,7 @@ lambda = lambda0 * (0.01/lambda0).^([0:(epochs-1)]/epochs);
        %Adaptation 
         for k = 1:size(prototypes,1)
             D_prototypes(ranks(k),:) = D_prototypes(ranks(k),:) + (exp(-k/lambda(i)) * x);
-            D_prototypes_av(ranks(k),:) = D_prototypes_av(ranks(k),:) + exp(-k/lambda(k));
+            D_prototypes_av(ranks(k),:) = D_prototypes_av(ranks(k),:) + exp(-k/lambda(i));
         end 
       end
       
