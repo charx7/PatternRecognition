@@ -25,9 +25,11 @@ scatterData = [[dataMat] clusterLabels];
 x1 = scatterData(:,1);
 x2 = scatterData(:, 2);
 classes = scatterData(:,3);
-scatter(x1(classes == 1), x2(classes == 1), markerz(1));
-hold on;
-scatter(x1(classes == 2), x2(classes == 2), markerz(2));
+
+for p=1:size(centroids,1)
+    scatter(x1(classes == p), x2(classes == p), markerz(p));
+    hold on;
+end
 hold off
 title('k = 2');
 
@@ -45,13 +47,10 @@ scatterData = [[dataMat] clusterLabels];
 x1 = scatterData(:,1);
 x2 = scatterData(:, 2);
 classes = scatterData(:,3);
-scatter(x1(classes == 1), x2(classes == 1))
-hold on;
-scatter(x1(classes == 2), x2(classes == 2))
-hold on
-scatter(x1(classes == 3), x2(classes == 3))
-hold on
-scatter(x1(classes == 4), x2(classes == 4))
+for p=1:size(centroids,1)
+    scatter(x1(classes == p), x2(classes == p), markerz(p));
+    hold on;
+end
 hold off
 title('k = 4');
 
@@ -69,20 +68,9 @@ scatterData = [[dataMat] clusterLabels];
 x1 = scatterData(:,1);
 x2 = scatterData(:, 2);
 classes = scatterData(:,3);
-scatter(x1(classes == 1), x2(classes == 1))
-hold on;
-scatter(x1(classes == 2), x2(classes == 2))
-hold on
-scatter(x1(classes == 3), x2(classes == 3))
-hold on
-scatter(x1(classes == 4), x2(classes == 4))
-hold on
-scatter(x1(classes == 5), x2(classes == 5))
-hold on
-scatter(x1(classes == 6), x2(classes == 6))
-hold on
-scatter(x1(classes == 7), x2(classes == 7))
-hold on
-scatter(x1(classes == 8), x2(classes == 8))
+for p=1:size(centroids,1)
+    scatter(x1(classes == p), x2(classes == p), markerz(p));
+    hold on;
+end
 hold off
 title('k = 8');
