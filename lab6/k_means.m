@@ -9,7 +9,8 @@ load = load('kmeans1.mat');
 dataMat = cell2mat(struct2cell(load));
 % Call the k means func k=2
 [initialCentroids, centroids, clusterLabels]  = myKmeans(dataMat, 2 ,1000);
-[initialCentroids, centroids, clusterLabels]  = k_means_plusplus(dataMat, 2 ,1000);
+
+%[initialCentroids, centroids, clusterLabels]  = k_means_plusplus(dataMat, 2 ,1000);
 
 colorz = ['r','g','b','c','m','y','k','w'];
 % Plotz for dayz

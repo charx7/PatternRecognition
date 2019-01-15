@@ -59,4 +59,4 @@ stdKMeans = std(twenty_runsError_kmeans)
 kPlusMean = mean(twenty_runsError_kmeans_plus)
 stdKMeansPlus = std(twenty_runsError_kmeans_plus)
 % t-test
-[h,pValue] = ttest2(twenty_runsError_kmeans, twenty_runsError_kmeans_plus)
+[h,pValue] = ttest2(twenty_runsError_kmeans, twenty_runsError_kmeans_plus, 'Tail', 'right')

@@ -11,6 +11,7 @@ dataMat = cell2mat(struct2cell(load));
 %[initialCentroids, centroids, clusterLabels]  = k_means_plusplus(dataMat, 2 ,1000);
 
 colorz = ['r','g','b','c','m','y','k','w'];
+markerz = ['+','>','o','.', '<','v','d','^'];
 % Plotz for dayz
 figure
 subplot(2,2,1)
@@ -24,9 +25,9 @@ scatterData = [[dataMat] clusterLabels];
 x1 = scatterData(:,1);
 x2 = scatterData(:, 2);
 classes = scatterData(:,3);
-scatter(x1(classes == 1), x2(classes == 1))
+scatter(x1(classes == 1), x2(classes == 1), markerz(1));
 hold on;
-scatter(x1(classes == 2), x2(classes == 2))
+scatter(x1(classes == 2), x2(classes == 2), markerz(2));
 hold off
 title('k = 2');
 
@@ -81,5 +82,7 @@ hold on
 scatter(x1(classes == 6), x2(classes == 6))
 hold on
 scatter(x1(classes == 7), x2(classes == 7))
+hold on
+scatter(x1(classes == 8), x2(classes == 8))
 hold off
 title('k = 8');
