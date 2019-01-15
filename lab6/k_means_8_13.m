@@ -14,15 +14,16 @@ quotientFunction = [];
 twenty_runsError_kmeans = [];
 twenty_runsError_kmeans_plus = [];
 % change to 10 after try out with 3 for debugz
-for n=1:5
+for n=1:10
     tic
     disp('Starting trial number: ');
     n 
     for i=1:20
+        
         % K-means
-        [initialCentroids, centroids, clusterLabels]  = myKmeans(dataMat, 100 ,40);
+        [initialCentroids, centroids, clusterLabels]  = myKmeans(dataMat, 100 ,70);
         % K-means ++
-        [initialCentroids_plus, centroids_plus, clusterLabels_plus] = k_means_plusplus(dataMat, 100, 50);
+        [initialCentroids_plus, centroids_plus, clusterLabels_plus] = k_means_plusplus(dataMat, 100, 70);
         % Error for k-means
         currentKError = quantization_error(dataMat, centroids, clusterLabels);
         % Error for k-means ++
