@@ -23,19 +23,23 @@ subplot(2,2,1)
 plot(dataMat(:,1),dataMat(:,2),'bo','markersize',3)
 hold on
 plot(prototypes1(:,1),prototypes1(:,2),'r.','markersize',10,'linewidth',3)
+title("epoch 20")
 hold off
 subplot(2,2,2)
 plot(dataMat(:,1),dataMat(:,2),'bo','markersize',3)
 hold on
 plot(prototypes2(:,1),prototypes2(:,2),'r.','markersize',10,'linewidth',3)
+title("epoch 100")
 hold off
 subplot(2,2,3)
 plot(dataMat(:,1),dataMat(:,2),'bo','markersize',3)
 hold on
 plot(prototypes3(:,1),prototypes3(:,2),'r.','markersize',10,'linewidth',3)
+title("epoch 200")
 hold off
 subplot(2,2,4)
 plot(dataMat(:,1),dataMat(:,2),'bo','markersize',3)
 hold on
 plot(prototypes4(:,1),prototypes4(:,2),'r.','markersize',10,'linewidth',3)
+title("epoch 500")
 hold off
